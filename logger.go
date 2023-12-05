@@ -107,6 +107,7 @@ type Logger interface {
 	// Debug formats using the default formats for its operands and
 	// logs a message with severity "LevelDebug".
 	Debug(args ...interface{})
+	Print(args ...interface{})
 	// Trace formats using the default formats for its operands and
 	// logs a message with severity "LevelTrace".
 	Trace(args ...interface{})
@@ -301,6 +302,12 @@ func (self *StandardLogger) Info(args ...interface{}) {
 	}
 }
 
+func (self *StandardLogger) Print(args ...interface{}) {
+	if self.IsEnabledFor(LevelInfo) {
+		self.doLog(LevelInfo, args...)
+	}
+}
+
 func (self *StandardLogger) Debug(args ...interface{}) {
 	if self.IsEnabledFor(LevelDebug) {
 		self.doLog(LevelDebug, args...)
@@ -342,6 +349,12 @@ func (self *StandardLogger) Warnf(format string, args ...interface{}) {
 func (self *StandardLogger) Infof(format string, args ...interface{}) {
 	if self.IsEnabledFor(LevelInfo) {
 		self.doLogf(LevelInfo, format, args...)
+	}
+}
+
+func (self *StandardLogger) Pirnt(args ...interface{}) {
+	if self.IsEnabledFor(LevelInfo) {
+		self.doLogf(LevelInfo, "%v", args...)
 	}
 }
 
